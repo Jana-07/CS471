@@ -1,0 +1,91 @@
+.link {
+    padding: 30px;
+    text-align: center;
+    display: block;
+    text-decoration: underline;
+}
+
+#section1 {
+    background-color: lightgreen;
+}
+
+#link1 {
+    color: red;
+}
+
+#link1:visited {
+    color: darkred;
+}
+
+#link1:hover {
+    color: white;
+    background-color: rgb(54, 104, 54);
+}
+
+#section2 {
+    background-color: gray;
+}
+
+#link2 {
+    color: yellow;
+   
+}
+
+#link2:visited {
+    color: rgb(249, 188, 76);
+}
+
+#link2:hover {
+    color: black;
+    background-color: rgb(224, 224, 224);
+}
+
+#section3 {
+    background-color: black;
+}
+
+#link3 {
+    color: white;
+    
+}
+
+#link3:visited {
+    color: lightgray;
+}
+
+#link3:hover {
+    color: black;
+    background-color: white;
+}
+
+h1 {
+    color: green;
+    background-color: beige;
+    padding: 10px;
+}
+
+h2 {
+    color: white;
+    background-color: cadetblue;
+    padding: 10px;
+}
+
+.table, th, td {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+    border: 1px solid;
+}
+
+#caption1 {
+    font-weight: bold;
+}
+  
+#table2 td, #table2 th {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#table2 {
+    border-collapse: collapse;
+}

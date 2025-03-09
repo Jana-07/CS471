@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+
+<body>
+    <div id="section1">
+        <a id="link1" class="link" href="https://myqu.qu.edu.sa" target="_blank">Go to QU website (open a new tab)</a>
+    </div>
+
+    <div id="section2">
+        <a id="link2" class="link" href="https://myqu.qu.edu.sa">Go to QU website (open in the same page/tab)</a>
+    </div>
+
+    <div id="section3" >
+        <a id="link3" class="link" href="https://myqu.qu.edu.sa" target="_parent">Go to QU website (open in the same page/tab)</a>
+    </div>
+</body>
+</html>
