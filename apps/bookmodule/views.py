@@ -1,7 +1,12 @@
 from django.shortcuts import render
-
 from django.http import HttpResponse
+from django.db.models import Q, Count, Sum, Avg, Max, Min
 from .models import Book
+from .models import Address
+from .models import Student
+
+import random
+
 
 def index(request): 
     name = request.GET.get("name") or "world!"
@@ -66,9 +71,9 @@ def search(request):
     return render(request, 'bookmodule/search.html')
 
 def __getBooksList():
-    book1 = {'id':12344321, 'title':'Continuous Delivery', 'author':'J.Humble and D. Farley'}
-    book2 = {'id':56788765,'title':'Reversing: Secrets of Reverse Engineering', 'author':'E. Eilam'}
-    book3 = {'id':43211234, 'title':'The Hundred-Page Machine Learning Book', 'author':'Andriy Burkov'}
+    book1 = {'id':12344321, 'title':'Continuous Delivery', 'author':'J.Humble and D. Farley', 'price' : 80}
+    book2 = {'id':56788765,'title':'Reversing: Secrets of Reverse Engineering', 'author':'E. Eilam', 'price' : 50}
+    book3 = {'id':43211234, 'title':'The Hundred-Page Machine Learning Book', 'author':'Andriy Burkov', 'price' :100}
     return [book1, book2, book3]
 
 def add_book():
@@ -86,3 +91,56 @@ def complex_query(request):
     else:
         return render(request, 'bookmodule/index.html')
 
+def task1(request):
+    mybooks=Book.objects.filter(Q(price__lte=80))
+    print(f"Found {mybooks.count()} books")
+    return render(request, 'bookmodule/task1.html', {'books': mybooks})
+
+def task2(request):
+    mybooks=Book.objects.filter(Q(edition__gte=3) & (Q(title__icontains='co') | Q(author__icontains='co')))
+    print(f"Found {mybooks.count()} books")
+    return render(request, 'bookmodule/task2.html', {'books': mybooks})
+
+def task3(request):
+    books = Book.objects.filter(
+        ~Q(edition__gt=3) & ~(Q(title__icontains='co') | Q(author__icontains='co'))
+    )
+    return render(request, 'bookmodule/task3.html', {'books': books})
+
+def task4(request):
+    books = Book.objects.all().order_by('title')
+    return render(request, 'bookmodule/task4.html', {'books': books})
+
+def task5(request):
+    query = Book.objects.aggregate(
+        total=Count('id'),
+        total_price=Sum('price'),
+        avg_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price'),
+    )
+    return render(request, 'bookmodule/task5.html', {'query': query})
+
+def task7(request):
+    students_by_city = Address.objects.annotate(student_count=Count('student'))
+    return render(request, 'bookmodule/task7.html', {'students_by_city': students_by_city})
+
+def generate_random_student():
+    names = ["John", "Alice", "Bob", "Eve", "Charlie", "Diana", "Liam", "Sophia"]
+    cities = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego"]
+    
+    name = random.choice(names)
+    age = random.randint(18, 30)
+    city = random.choice(cities)
+    
+    # Create Address object
+    address = Address(city=city)
+    address.save()  # Save the address first, as we need it for the ForeignKey
+
+    # Create Student object
+    student = Student(name=name, age=age, address=address)
+    student.save()
+    
+    return student, address
+
+generate_random_student()

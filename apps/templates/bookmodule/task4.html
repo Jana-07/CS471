@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Book List {% endblock title %}
+<h2>Book List</h2>
+
+<head>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+{% block content %}
+
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+    </tr>
+     {% for obj in books %}
+            <tr>
+                <td>{{obj.id}}</td>
+                <td>{{obj.title}}</td>
+            </tr>
+    {% endfor %}
+
+</table>
+{% endblock content %}

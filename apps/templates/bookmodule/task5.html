@@ -1,0 +1,21 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Book List {% endblock title %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+{% block content %}
+
+<h2>Book Statistics</h2>
+<ul>
+  <li>Total Books: {{ query.total }}</li>
+  <li>Total Price: ${{ query.total_price }}</li>
+  <li>Average Price: ${{ query.avg_price }}</li>
+  <li>Max Price: ${{ query.max_price }}</li>
+  <li>Min Price: ${{ query.min_price }}</li>
+</ul>
+
+{% endblock content %}
