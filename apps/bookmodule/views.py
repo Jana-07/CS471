@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q, Count, Sum, Avg, Max, Min
+import random
+
 from .models import Book
 from .models import Address
 from .models import Student
-
-import random
-
 
 def index(request): 
     name = request.GET.get("name") or "world!"
