@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Book List {% endblock title %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+{% block content %}
+
+<table>
+  <tr>
+      <th>Courses</th>
+      <th>Students</th>
+  </tr>
+   {% for course in courses %}
+          <tr>
+              <td>{{course.title}}</td>
+              <td>{{course.student_count}}</td>
+          </tr>
+  {% endfor %}
+
+</table>
+
+{% endblock content %}

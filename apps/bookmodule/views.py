@@ -3,9 +3,8 @@ from django.http import HttpResponse
 from django.db.models import Q, Count, Sum, Avg, Max, Min
 import random
 
-from .models import Book
-from .models import Address
-from .models import Student
+from .models import *
+
 
 def index(request): 
     name = request.GET.get("name") or "world!"
@@ -93,22 +92,22 @@ def complex_query(request):
 def task1(request):
     mybooks=Book.objects.filter(Q(price__lte=80))
     print(f"Found {mybooks.count()} books")
-    return render(request, 'bookmodule/task1.html', {'books': mybooks})
+    return render(request, 'bookmodule/lab8/task1.html', {'books': mybooks})
 
 def task2(request):
     mybooks=Book.objects.filter(Q(edition__gte=3) & (Q(title__icontains='co') | Q(author__icontains='co')))
     print(f"Found {mybooks.count()} books")
-    return render(request, 'bookmodule/task2.html', {'books': mybooks})
+    return render(request, 'bookmodule/lab8/task2.html', {'books': mybooks})
 
 def task3(request):
     books = Book.objects.filter(
         ~Q(edition__gt=3) & ~(Q(title__icontains='co') | Q(author__icontains='co'))
     )
-    return render(request, 'bookmodule/task3.html', {'books': books})
+    return render(request, 'bookmodule/lab8/task3.html', {'books': books})
 
 def task4(request):
     books = Book.objects.all().order_by('title')
-    return render(request, 'bookmodule/task4.html', {'books': books})
+    return render(request, 'bookmodule/lab8/task4.html', {'books': books})
 
 def task5(request):
     query = Book.objects.aggregate(
@@ -118,11 +117,11 @@ def task5(request):
         max_price=Max('price'),
         min_price=Min('price'),
     )
-    return render(request, 'bookmodule/task5.html', {'query': query})
+    return render(request, 'bookmodule/lab8/task5.html', {'query': query})
 
 def task7(request):
     students_by_city = Address.objects.annotate(student_count=Count('student'))
-    return render(request, 'bookmodule/task7.html', {'students_by_city': students_by_city})
+    return render(request, 'bookmodule/lab8/task7.html', {'students_by_city': students_by_city})
 
 def generate_random_student():
     names = ["John", "Alice", "Bob", "Eve", "Charlie", "Diana", "Liam", "Sophia"]
@@ -143,3 +142,34 @@ def generate_random_student():
     return student, address
 
 generate_random_student()
+
+
+def task9_1(request):
+    departments = Department.objects.annotate(student_count=Count('students'))
+    return render(request, 'bookmodule/lab9/task1.html', {'departments': departments})
+
+def task9_2(request):
+    courses = Course.objects.annotate(student_count=Count('students'))
+    return render(request, 'bookmodule/lab9/task2.html', {'courses': courses})
+
+def task9_3(request):
+    departments = Department.objects.annotate(oldest_student_id=Min('students__id'))
+    for dept in departments:
+        oldest = Student2.objects.filter(
+            department=dept,
+            id=dept.oldest_student_id
+        ).first()
+        dept.oldest_student_name = oldest.name if oldest else "None"
+    return render(request, 'bookmodule/lab9/task3.html', {'departments': departments})
+
+def task9_4(request):
+    departments = Department.objects.annotate(
+        student_count=Count('students')
+    ).filter(
+        student_count__gt=2
+    ).order_by(
+        '-student_count'
+    )
+    return render(request, 'bookmodule/lab9/task4.html', {'departments': departments})
+
+     
