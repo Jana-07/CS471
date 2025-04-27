@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} List of Books {% endblock title %}
+
+{% block content %}
+    <h1>List of Books</h1>
+    {% for book in books %}
+    <a href="{% url 'books.view_one_book' 1 %}"><h2>{{book.title}}</h2></a>
+    <a href="{% url 'books.view_one_book' 1 %}"><img src="{% static 'book2.jpg' %}" alt="Book1 img desc" width="200" height="200"></a>
+    <br><br>
+    <a href="{% url 'books.edit_book2' book.id %}">
+        <button>Edit Book</button>
+    </a>
+    <br><br>
+    <a href="{% url 'books.delete_book2' book.id %}">
+        <button>Delete Book</button>
+    </a>
+    <hr>
+    {% endfor %}
+    <br>
+    <a href="{% url 'books.add_book2' %}">
+        <button>Add Book</button>
+    </a>
+{% endblock content %}

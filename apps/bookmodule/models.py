@@ -43,12 +43,12 @@ class Student2(models.Model):
     name = models.CharField(max_length=100)
     card = models.OneToOneField(
         Card,
-        on_delete=models.PROTECT,  # Prevents card deletion if linked to student
+        on_delete=models.PROTECT,
         related_name='student'
     )
     department = models.ForeignKey(
         Department,
-        on_delete=models.CASCADE,  # Deletes students when department is deleted
+        on_delete=models.CASCADE,
         related_name='students'
     )
     courses = models.ManyToManyField(
