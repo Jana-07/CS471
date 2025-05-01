@@ -19,6 +19,15 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+    
+#lab 11
+class Student3(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    address = models.ManyToManyField(Address, related_name='students')
+
+    def __str__(self):
+        return self.name
 
 class Card(models.Model):
     card_number = models.CharField(max_length=20, unique=True)
@@ -56,5 +65,12 @@ class Student2(models.Model):
         related_name='students'
     )
     
+    def __str__(self):
+        return self.name
+    
+class Food(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='food_images/')
+
     def __str__(self):
         return self.name

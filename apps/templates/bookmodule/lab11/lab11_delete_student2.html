@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} List of Books {% endblock title %}
+
+{% block content %}
+    
+    <form method = "post">
+        {% csrf_token %}
+        Are you sure to delete the student {{student.name}}?
+        <button type="submit">Delete Student</button>
+    </form>
+    
+{% endblock content %}

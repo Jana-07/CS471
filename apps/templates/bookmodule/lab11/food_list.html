@@ -1,0 +1,13 @@
+<h1>Food List</h1>
+
+<ul>
+    {% for food in foods %}
+    <li>
+        <h2>{{ food.name }}</h2>
+        <img src="{{ food.image.url }}" width="200" alt="{{ food.name }}">
+    </li>
+    {% endfor %}
+
+    <a href="{% url 'add_image' %}">
+        <button>Add Food</button>
+</ul>

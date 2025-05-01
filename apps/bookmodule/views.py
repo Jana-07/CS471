@@ -145,8 +145,6 @@ def generate_random_student():
     
     return student, address
 
-generate_random_student()
-
 
 def task9_1(request):
     departments = Department.objects.annotate(student_count=Count('students'))
@@ -256,3 +254,88 @@ def task9_2_4(request, bookId):
 
     return render(request, 'bookmodule/lab10_part2/lab9_delete_book.html', {'book':book})
 
+
+def lab11_student_list(request):
+    students=Student.objects.all()
+    return render(request, 'bookmodule/lab11/lab11_student_list.html', {'students' : students})
+
+def lab11_add_student(request):
+    obj = None
+    if request.method=='POST':
+        form = forms.StudentForm(request.POST)
+        if form.is_valid():
+            obj = form.save()
+            return redirect('books.student_list')
+    else: form = forms.StudentForm(None)
+    return render(request, 'bookmodule/lab11/lab11_add_student.html', {'form':form})
+
+def lab11_edit_student(request, studentId):
+    student = Student.objects.get(id=studentId)  
+
+    if request.method == 'POST':
+        form = forms.StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('books.student_list')
+    else:
+        form = forms.StudentForm(instance=student)
+
+    return render(request, 'bookmodule/lab11/lab11_edit_student.html', {'form': form})
+
+
+def lab11_delete_student(request, studentId):
+    student=Student.objects.get(id=studentId)
+    if request.method=='POST':
+        student.delete()
+        return redirect('books.student_list')
+
+    return render(request, 'bookmodule/lab11/lab11_delete_student.html', {'student':student})
+
+def lab11_student_list2(request):
+    students=Student3.objects.all()
+    return render(request, 'bookmodule/lab11/lab11_student_list2.html', {'students' : students})
+
+def lab11_add_student2(request):
+    obj = None
+    if request.method=='POST':
+        form = forms.StudentForm2(request.POST)
+        if form.is_valid():
+            obj = form.save()
+            return redirect('books.student_list2')
+    else: form = forms.StudentForm2(None)
+    return render(request, 'bookmodule/lab11/lab11_add_student2.html', {'form':form})
+
+def lab11_edit_student2(request, studentId):
+    student = Student3.objects.get(id=studentId)  
+
+    if request.method == 'POST':
+        form = forms.StudentForm2(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('books.student_list2')
+    else:
+        form = forms.StudentForm2(instance=student)
+
+    return render(request, 'bookmodule/lab11/lab11_edit_student2.html', {'form': form})
+
+def lab11_delete_student2(request, studentId):
+    student=Student3.objects.get(id=studentId)
+    if request.method=='POST':
+        student.delete()
+        return redirect('books.student_list2')
+
+    return render(request, 'bookmodule/lab11/lab11_delete_student.html', {'student':student})
+
+def add_image(request):
+    if request.method == 'POST':
+        form = forms.FoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('food_list')
+    else:
+        form = forms.FoodForm()
+    return render(request, 'bookmodule/lab11/add_image.html', {'form':form})
+
+def food_list(request):
+    foods = Food.objects.all()
+    return render(request, 'bookmodule/lab11/food_list.html', {'foods': foods})

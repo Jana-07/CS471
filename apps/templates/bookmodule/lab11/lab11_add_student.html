@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} List of Books {% endblock title %}
+
+{% block content %}
+<h3>Adding Book</h3>
+<form method="POST">
+    {% csrf_token %} 
+    {{ form }}
+    <button type="submit">Add Student</button>
+</form>
+
+{% endblock content %}

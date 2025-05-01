@@ -1,0 +1,34 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} List of Books {% endblock title %}
+
+{% block content %}
+<h1>List of Students</h1>
+<table>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Address</th>
+    
+    {% for student in students %}
+    <tr>
+        <td>{{student.id}}</td>
+        <td>{{student.name}}</td>
+        <td>{{student.address}}</td>
+        <td><a href="{% url 'books.edit_student' student.id %}">
+                <button>Edit Student</button>
+            </a></td>
+        <td><a href="{% url 'books.delete_student' student.id %}">
+                <button>Delete Student</button>
+            </a></td>
+
+    </tr>
+
+    {% endfor %}
+    <br>
+</table>
+<a href="{% url 'books.add_student' %}">
+    <button>Add Student</button>
+</a>
+{% endblock content %}
