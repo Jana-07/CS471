@@ -1,5 +1,9 @@
 <h1>Food List</h1>
 
+{% for msg in messages %}
+<p>{{ msg }}</p>
+{% endfor %}
+
 <ul>
     {% for food in foods %}
     <li>
@@ -10,4 +14,6 @@
 
     <a href="{% url 'add_image' %}">
         <button>Add Food</button>
+        <br><br>
+        <a href="{% url 'logout' %}">Logout</a>
 </ul>

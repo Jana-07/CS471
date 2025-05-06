@@ -8,6 +8,8 @@ from django.shortcuts import redirect
 from apps.bookmodule import forms
 
 from .models import *
+from django.contrib.auth.decorators import login_required
+
 
 
 def index(request): 
@@ -336,6 +338,8 @@ def add_image(request):
         form = forms.FoodForm()
     return render(request, 'bookmodule/lab11/add_image.html', {'form':form})
 
+
+@login_required(login_url='/users/login/')
 def food_list(request):
     foods = Food.objects.all()
     return render(request, 'bookmodule/lab11/food_list.html', {'foods': foods})
